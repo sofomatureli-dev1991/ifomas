@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ka">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>მისტიკური სამყაროს ენერგიები</title>
     <style>
         * {
@@ -15,6 +15,7 @@
             color: #e8dcc8;
             font-family: 'Georgia', serif;
             line-height: 1.8;
+            scroll-behavior: smooth;
         }
         .container {
             max-width: 1100px;
@@ -23,7 +24,8 @@
         }
         header {
             background: rgba(11, 26, 43, 0.95);
-            padding: 15px 0;
+            backdrop-filter: blur(6px);
+            padding: 12px 0;
             position: fixed;
             top: 0;
             left: 0;
@@ -40,19 +42,29 @@
             padding: 0 24px;
         }
         .logo {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             border: 2px solid #d4af37;
             background: #0b1a2b;
+            overflow: hidden;
+            padding: 8px;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
-            cursor: pointer;
+            transition: 0.3s;
         }
         .logo:hover {
-            transform: scale(1.05);
+            transform: scale(1.08);
+            border-color: #f0d97a;
+        }
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+            filter: brightness(0) saturate(100%) invert(85%) sepia(55%) saturate(600%) hue-rotate(5deg) brightness(0.9);
         }
         nav {
             display: flex;
@@ -74,13 +86,28 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 100px 20px 60px;
+            padding: 120px 20px 60px;
             background: #0b1a2b;
         }
-        .hero h1 {
-            font-size: 3.5rem;
-            color: #d4af37;
-            margin-bottom: 20px;
+        .hero-logo {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            background: #0b1a2b;
+            border: 3px solid #d4af37;
+            overflow: hidden;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hero-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+            filter: brightness(0) saturate(100%) invert(85%) sepia(55%) saturate(600%) hue-rotate(5deg) brightness(0.9);
         }
         .hero p {
             font-size: 1.2rem;
@@ -91,7 +118,6 @@
             padding: 28px 30px;
             border-radius: 20px;
             border-left: 4px solid #d4af37;
-            line-height: 1.8;
             text-align: left;
         }
         section {
@@ -103,6 +129,7 @@
         }
         h2 {
             font-size: 2.6rem;
+            font-weight: 300;
             color: #d4af37;
             margin-bottom: 30px;
             border-left: 6px solid #d4af37;
@@ -129,6 +156,7 @@
             border-radius: 20px;
             border: 1px solid #1a334a;
             transition: 0.3s;
+            cursor: pointer;
         }
         .card:hover {
             transform: translateY(-8px);
@@ -144,7 +172,6 @@
         .card p {
             color: #cbb8e0;
             font-size: 1rem;
-            line-height: 1.7;
         }
         .tag {
             display: inline-block;
@@ -164,7 +191,7 @@
             max-width: 700px;
             margin: 0 auto;
         }
-        .orakulo-box p {
+        .orakulo-box p#orakulo-answer {
             font-size: 1.6rem;
             color: #f0d97a;
             min-height: 100px;
@@ -247,8 +274,15 @@
             nav a {
                 font-size: 0.85rem;
             }
-            .hero h1 {
-                font-size: 2.2rem;
+            .logo {
+                width: 48px;
+                height: 48px;
+                padding: 6px;
+            }
+            .hero-logo {
+                width: 140px;
+                height: 140px;
+                padding: 16px;
             }
             .hero p {
                 font-size: 1rem;
@@ -257,17 +291,18 @@
             h2 {
                 font-size: 2rem;
             }
-            .orakulo-box p {
+            .orakulo-box p#orakulo-answer {
                 font-size: 1.2rem;
             }
         }
     </style>
 </head>
 <body>
-
     <header>
         <div class="nav-container">
-            <div class="logo" onclick="document.getElementById('home').scrollIntoView({behavior:'smooth'})">✦</div>
+            <div class="logo" onclick="document.getElementById('home').scrollIntoView({behavior:'smooth'})">
+                <img src="https://i.postimg.cc/g0g4KFjk/333338779.png" alt="ლოგო" />
+            </div>
             <nav>
                 <a href="#home">მთავარი</a>
                 <a href="#qaluri">ქალური ლოგიკა</a>
@@ -283,7 +318,9 @@
 
     <section id="home" class="hero">
         <div>
-            <h1>✦ მისტიკური სამყაროს ენერგიები ✦</h1>
+            <div class="hero-logo">
+                <img src="https://i.postimg.cc/g0g4KFjk/333338779.png" alt="მისტიკური სამყაროს ენერგიები" />
+            </div>
             <p>
                 ეს არის სამოყვარულო მაგიურ-მისტიურ-ფილოსოფიურ-შემეცნებითი საიტი.<br>
                 მთლიანად ჩემს მიერ არის შექმნილი – ყველა სტატია, ყველა რიტუალი, ყველა ნაწარმოები, ყველა ორაკულო ჩემს მიერ არის მოფიქრებული.<br><br>
@@ -297,100 +334,52 @@
 
     <section id="qaluri">
         <div class="container">
-            <h2>🔮 ქალური ლოგიკა</h2>
+            <h2>✦ ქალური ლოგიკა</h2>
             <div class="section-desc">
                 ამ განყოფილებაში შევეხები ყველაფერს – პოლიტიკას, სოციალურ თემებს, ურთიერთობებს, პროპაგანდას, ხალხის დამორჩილებას, რწმენას, რელიგიებს, ფილოსოფიას. ზოგადად, ყველაფერს. მთლიანად ჩემი აზრები იქნება – ჩემი შეხედულებები, ჩემი ფიქრები.
             </div>
             <div class="card-grid">
-                <div class="card">
-                    <h3>✦ [სტატიის სათაური 1]</h3>
-                    <p>[აქ ჩაწერეთ თქვენი ტექსტი]</p>
-                    <span class="tag">ფილოსოფია</span>
-                </div>
-                <div class="card">
-                    <h3>✦ [სტატიის სათაური 2]</h3>
-                    <p>[აქ ჩაწერეთ თქვენი ტექსტი]</p>
-                    <span class="tag">სოციალური</span>
-                </div>
-                <div class="card">
-                    <h3>✦ [სტატიის სათაური 3]</h3>
-                    <p>[აქ ჩაწერეთ თქვენი ტექსტი]</p>
-                    <span class="tag">პოლიტიკა</span>
-                </div>
+                <div class="card"><h3>✦ [სტატიის სათაური 1]</h3><p>[აქ ჩაწერეთ თქვენი ტექსტი]</p><span class="tag">ფილოსოფია</span></div>
+                <div class="card"><h3>✦ [სტატიის სათაური 2]</h3><p>[აქ ჩაწერეთ თქვენი ტექსტი]</p><span class="tag">სოციალური</span></div>
+                <div class="card"><h3>✦ [სტატიის სათაური 3]</h3><p>[აქ ჩაწერეთ თქვენი ტექსტი]</p><span class="tag">პოლიტიკა</span></div>
             </div>
         </div>
     </section>
 
     <section id="magia">
         <div class="container">
-            <h2>✨ მაგიური ენერგიები</h2>
+            <h2>✦ მაგიური ენერგიები</h2>
             <div class="section-desc">
                 ამ განყოფილებაში შევეხები ენერგიებს, ვიბრაციასა და სიხშირეს. შევეცდები, სამოყვარულო დონეზე ავხსნა სხვადასხვა ენერგიები – რა სიხშირეზე ვიბრირებენ. მე მიმაჩნია, რომ სინათლეც შეიძლება იყოს უარყოფითი, ასევე სიბნელეც შეიძლება იყოს დადებითი. ეს მაგიაა და ეს ჩემი პირადი მოსაზრებებია. მე არ ვარ ფიზიკოსი, არც ეზოთერიკი – მე იმას ვწერ, რაც მესმის და რასაც შევიგრძნობ.
             </div>
             <div class="card-grid">
-                <div class="card">
-                    <h3>✦ [სტატიის სათაური 1]</h3>
-                    <p>[აქ ჩაწერეთ თქვენი ტექსტი]</p>
-                    <span class="tag">ენერგია</span>
-                </div>
-                <div class="card">
-                    <h3>✦ [სტატიის სათაური 2]</h3>
-                    <p>[აქ ჩაწერეთ თქვენი ტექსტი]</p>
-                    <span class="tag">ვიბრაცია</span>
-                </div>
-                <div class="card">
-                    <h3>✦ [სტატიის სათაური 3]</h3>
-                    <p>[აქ ჩაწერეთ თქვენი ტექსტი]</p>
-                    <span class="tag">სიხშირე</span>
-                </div>
+                <div class="card"><h3>✦ [სტატიის სათაური 1]</h3><p>[აქ ჩაწერეთ თქვენი ტექსტი]</p><span class="tag">ენერგია</span></div>
+                <div class="card"><h3>✦ [სტატიის სათაური 2]</h3><p>[აქ ჩაწერეთ თქვენი ტექსტი]</p><span class="tag">ვიბრაცია</span></div>
+                <div class="card"><h3>✦ [სტატიის სათაური 3]</h3><p>[აქ ჩაწერეთ თქვენი ტექსტი]</p><span class="tag">სიხშირე</span></div>
             </div>
         </div>
     </section>
 
     <section id="ritual">
         <div class="container">
-            <h2>🕯️ რიტუალები</h2>
+            <h2>✦ რიტუალები</h2>
             <div class="section-desc">
                 ამ განყოფილებაში იქნება სრულად ჩემს მიერ შექმნილი რიტუალები. ეს შელოცვები და რიტუალები მათთვის შევქმენი, ვისაც ჯერა, რომ სამყარო მხოლოდ ის არ არის, რასაც მატერიალურად ვხედავთ – ის გაცილებით დიდია, უსაზღვრო და შეუცნობელია. მინდა, რომ ჩემი შელოცვები და რიტუალები ცოტათი მაინც დაგეხმაროთ სამყაროსთან დაახლოებაში. ისინი მაქსიმალურად უსაფრთხოა, არ ეხმიანება არანაირ სიბოროტეს. ისინი მხოლოდ სამყაროსთან ჰარმონიულ ურთიერთობას უწყობს ხელს და თქვენ სულიერ განვითარებას აამაღლებს. მე მიყვარს სამყარო თავისი შეუცნობელი სიდიადით და ვეცადე, ეს სიყვარული გადმომეცა ამ შელოცვებში და რიტუალებში.
             </div>
             <div class="card-grid">
-                <div class="card">
-                    <h3>✦ [რიტუალის სათაური 1]</h3>
-                    <p>[აქ ჩაწერეთ რიტუალის აღწერა ან შელოცვა]</p>
-                    <span class="tag">შელოცვა</span>
-                </div>
-                <div class="card">
-                    <h3>✦ [რიტუალის სათაური 2]</h3>
-                    <p>[აქ ჩაწერეთ რიტუალის აღწერა ან შელოცვა]</p>
-                    <span class="tag">რიტუალი</span>
-                </div>
-                <div class="card">
-                    <h3>✦ [რიტუალის სათაური 3]</h3>
-                    <p>[აქ ჩაწერეთ რიტუალის აღწერა ან შელოცვა]</p>
-                    <span class="tag">შელოცვა</span>
-                </div>
-                <div class="card">
-                    <h3>✦ [რიტუალის სათაური 4]</h3>
-                    <p>[აქ ჩაწერეთ რიტუალის აღწერა ან შელოცვა]</p>
-                    <span class="tag">რიტუალი</span>
-                </div>
-                <div class="card">
-                    <h3>✦ [რიტუალის სათაური 5]</h3>
-                    <p>[აქ ჩაწერეთ რიტუალის აღწერა ან შელოცვა]</p>
-                    <span class="tag">შელოცვა</span>
-                </div>
-                <div class="card">
-                    <h3>✦ [რიტუალის სათაური 6]</h3>
-                    <p>[აქ ჩაწერეთ რიტუალის აღწერა ან შელოცვა]</p>
-                    <span class="tag">რიტუალი</span>
-                </div>
+                <div class="card"><h3>✦ [რიტუალის სათაური 1]</h3><p>[აქ ჩაწერეთ რიტუალის აღწერა ან შელოცვა]</p><span class="tag">შელოცვა</span></div>
+                <div class="card"><h3>✦ [რიტუალის სათაური 2]</h3><p>[აქ ჩაწერეთ რიტუალის აღწერა ან შელოცვა]</p><span class="tag">რიტუალი</span></div>
+                <div class="card"><h3>✦ [რიტუალის სათაური 3]</h3><p>[აქ ჩაწერეთ რიტუალის აღწერა ან შელოცვა]</p><span class="tag">შელოცვა</span></div>
+                <div class="card"><h3>✦ [რიტუალის სათაური 4]</h3><p>[აქ ჩაწერეთ რიტუალის აღწერა ან შელოცვა]</p><span class="tag">რიტუალი</span></div>
+                <div class="card"><h3>✦ [რიტუალის სათაური 5]</h3><p>[აქ ჩაწერეთ რიტუალის აღწერა ან შელოცვა]</p><span class="tag">შელოცვა</span></div>
+                <div class="card"><h3>✦ [რიტუალის სათაური 6]</h3><p>[აქ ჩაწერეთ რიტუალის აღწერა ან შელოცვა]</p><span class="tag">რიტუალი</span></div>
             </div>
         </div>
     </section>
 
     <section id="orakuli">
         <div class="container">
-            <h2>🔮 ორაკული</h2>
+            <h2>✦ ორაკული</h2>
             <div class="section-desc">
                 ამ განყოფილებაში წარმოგიდგენთ ჩემს მიერ შექმნილ ორაკულებს. ისინი მთლიანად ჩემს მიერ არის შექმნილი – ჩემი გრძნობებია. ვეცადე, მათი მისტიური და ფილოსოფიური მნიშვნელობა გადმომეცა და გამეზიარებინა თქვენთვის.
             </div>
@@ -402,21 +391,9 @@
             <div style="margin-top:60px;">
                 <h3 style="color:#d4af37;font-weight:300;text-align:center;margin-bottom:30px;">📜 ყველა ორაკული</h3>
                 <div class="card-grid">
-                    <div class="card" onclick="showOrakulo('ორაკული 1', 'ეს არის პირველი ორაკულის დეტალური ახსნა.')">
-                        <h3>✦ ორაკული 1</h3>
-                        <p>[მოკლე აღწერა]</p>
-                        <span class="tag">დააჭირე ახსნისთვის</span>
-                    </div>
-                    <div class="card" onclick="showOrakulo('ორაკული 2', 'ეს არის მეორე ორაკულის დეტალური ახსნა.')">
-                        <h3>✦ ორაკული 2</h3>
-                        <p>[მოკლე აღწერა]</p>
-                        <span class="tag">დააჭირე ახსნისთვის</span>
-                    </div>
-                    <div class="card" onclick="showOrakulo('ორაკული 3', 'ეს არის მესამე ორაკულის დეტალური ახსნა.')">
-                        <h3>✦ ორაკული 3</h3>
-                        <p>[მოკლე აღწერა]</p>
-                        <span class="tag">დააჭირე ახსნისთვის</span>
-                    </div>
+                    <div class="card" onclick="showOrakulo('ორაკული 1', 'ეს არის პირველი ორაკულის დეტალური ახსნა.')"><h3>✦ ორაკული 1</h3><p>[მოკლე აღწერა]</p><span class="tag">დააჭირე ახსნისთვის</span></div>
+                    <div class="card" onclick="showOrakulo('ორაკული 2', 'ეს არის მეორე ორაკულის დეტალური ახსნა.')"><h3>✦ ორაკული 2</h3><p>[მოკლე აღწერა]</p><span class="tag">დააჭირე ახსნისთვის</span></div>
+                    <div class="card" onclick="showOrakulo('ორაკული 3', 'ეს არის მესამე ორაკულის დეტალური ახსნა.')"><h3>✦ ორაკული 3</h3><p>[მოკლე აღწერა]</p><span class="tag">დააჭირე ახსნისთვის</span></div>
                 </div>
             </div>
         </div>
@@ -424,62 +401,36 @@
 
     <section id="samqaro">
         <div class="container">
-            <h2>🌌 სამყარო</h2>
+            <h2>✦ სამყარო</h2>
             <div class="section-desc">
                 ამ განყოფილებაში ვეცდები, სამყაროზე ვისაუბრო და კიდევ უფრო ვეცდები, მოყვარულის დონეზე მეცნიერულად ავხსნა სამყაროს შექმნა და სხვა მეცნიერული თეორიები. შეგახსენებთ, მე არ ვარ პროფესიონალი ფიზიკოსი ან ასტრონომი – მე ამ ყველაფერზე მოყვარულის დონეზე ვისაუბრებ. ასე რომ, ეს ყველაფერი მხოლოდ ჩემი იდეები და თეორიები იქნება.
             </div>
             <div class="card-grid">
-                <div class="card">
-                    <h3>✦ [სტატიის სათაური 1]</h3>
-                    <p>[აქ ჩაწერეთ თქვენი ტექსტი]</p>
-                    <span class="tag">კოსმოსი</span>
-                </div>
-                <div class="card">
-                    <h3>✦ [სტატიის სათაური 2]</h3>
-                    <p>[აქ ჩაწერეთ თქვენი ტექსტი]</p>
-                    <span class="tag">თეორია</span>
-                </div>
-                <div class="card">
-                    <h3>✦ [სტატიის სათაური 3]</h3>
-                    <p>[აქ ჩაწერეთ თქვენი ტექსტი]</p>
-                    <span class="tag">ფილოსოფია</span>
-                </div>
+                <div class="card"><h3>✦ [სტატიის სათაური 1]</h3><p>[აქ ჩაწერეთ თქვენი ტექსტი]</p><span class="tag">კოსმოსი</span></div>
+                <div class="card"><h3>✦ [სტატიის სათაური 2]</h3><p>[აქ ჩაწერეთ თქვენი ტექსტი]</p><span class="tag">თეორია</span></div>
+                <div class="card"><h3>✦ [სტატიის სათაური 3]</h3><p>[აქ ჩაწერეთ თქვენი ტექსტი]</p><span class="tag">ფილოსოფია</span></div>
             </div>
         </div>
     </section>
 
     <section id="fikrebi">
         <div class="container">
-            <h2>📖 ჩემი ფიქრები</h2>
+            <h2>✦ ჩემი ფიქრები</h2>
             <div class="section-desc">
                 ამ განყოფილებაში ჩემს მიერ დაწერილ მხატვრულ ნაწარმოებებს, ჩემს შექმნილ ისტორიებს გაგაცნობთ.
             </div>
             <div class="card-grid">
-                <div class="card">
-                    <h3>✦ [ნაწარმოების სათაური 1]</h3>
-                    <p>[მოკლე აღწერა]</p>
-                    <span class="tag">მხატვრული</span>
-                </div>
-                <div class="card">
-                    <h3>✦ [ნაწარმოების სათაური 2]</h3>
-                    <p>[მოკლე აღწერა]</p>
-                    <span class="tag">ისტორია</span>
-                </div>
-                <div class="card">
-                    <h3>✦ [ნაწარმოების სათაური 3]</h3>
-                    <p>[მოკლე აღწერა]</p>
-                    <span class="tag">მხატვრული</span>
-                </div>
+                <div class="card"><h3>✦ [ნაწარმოების სათაური 1]</h3><p>[მოკლე აღწერა]</p><span class="tag">მხატვრული</span></div>
+                <div class="card"><h3>✦ [ნაწარმოების სათაური 2]</h3><p>[მოკლე აღწერა]</p><span class="tag">ისტორია</span></div>
+                <div class="card"><h3>✦ [ნაწარმოების სათაური 3]</h3><p>[მოკლე აღწერა]</p><span class="tag">მხატვრული</span></div>
             </div>
         </div>
     </section>
 
     <section id="contact">
         <div class="container">
-            <h2>✉ კონტაქტი</h2>
-            <div class="section-desc">
-                გაქვს შეკითხვა, ან გსურს რაიმეს გაზიარება? მომწერე!
-            </div>
+            <h2>✦ კონტაქტი</h2>
+            <div class="section-desc">გაქვს შეკითხვა, ან გსურს რაიმეს გაზიარება? მომწერე!</div>
             <form class="contact-form" onsubmit="alert('🕯️ შენი წერილი მივიღეთ!')">
                 <input type="text" placeholder="შენი სახელი" required>
                 <input type="email" placeholder="ელ-ფოსტა" required>
@@ -490,10 +441,7 @@
     </section>
 
     <footer>
-        <p>
-            <span>✦</span> მისტიკური სამყაროს ენერგიები <span>✦</span><br>
-            🌙 2026 · ყველაფერი ენერგიაა
-        </p>
+        <p><span>✦</span> მისტიკური სამყაროს ენერგიები <span>✦</span><br>🌙 2026 · ყველაფერი ენერგიაა</p>
     </footer>
 
     <script>
@@ -513,16 +461,13 @@
             const randomIndex = Math.floor(Math.random() * answers.length);
             const el = document.getElementById('orakulo-answer');
             el.style.opacity = '0.3';
-            setTimeout(() => {
-                el.textContent = answers[randomIndex];
-                el.style.opacity = '1';
-            }, 250);
+            setTimeout(() => { el.textContent = answers[randomIndex]; el.style.opacity = '1'; }, 250);
         }
-
         function showOrakulo(title, desc) {
             alert('🔮 ' + title + '\n\n' + desc);
         }
     </script>
-
+</body>
+</html>
 </body>
 </html>
