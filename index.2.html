@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>მისტიკური სამყაროს ენერგიები</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;500;600;700&display=swap');
+
+    :root {
+      --gold: #d4af37;
+      --gold-light: #f0d878;
+      --purple: #2a1a4a;
+      --bg: #07071a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans Georgian', sans-serif;
+      background: var(--bg);
+      color: #e8d9ff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ===== კოსმოსური ფონი ===== */
+    #cosmos {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: radial-gradient(ellipse at bottom, #1b0b3a 0%, #07071a 70%);
+    }
+
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle var(--dur) ease-in-out infinite alternate;
+    }
+
+    @keyframes twinkle {
+      from { opacity: 0.2; transform: scale(0.8); }
+      to   { opacity: 1;   transform: scale(1.1); }
+    }
+
+    /* ===== მთავარი კონტეინერი ===== */
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 30px 18px 60px;
+    }
+
+    /* კუთხის ვარსკვლავები */
+    .corner {
+      position: fixed;
+      width: 60px;
+      height: 60px;
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .corner.tl { top: 12px; left: 12px; }
+    .corner.tr { top: 12px; right: 12px; }
+    .corner.bl { bottom: 12px; left: 12px; }
+    .corner.br { bottom: 12px; right: 12px; }
+
+    /* ===== ჰედერი (ყოველთვის ჩანს) ===== */
+    header { text-align: center; margin-bottom: 10px; }
+
+    h1 {
+      font-size: clamp(1.6rem, 4.5vw, 2.5rem);
+      font-weight: 700;
+      background: linear-gradient(90deg, #c9a0ff, #f0e0ff, #c9a0ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 14px;
+      letter-spacing: 0.5px;
+    }
+
+    .site-intro {
+      max-width: 780px;
+      margin: 0 auto 25px;
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: #cbb8f0;
+      opacity: 0.92;
+    }
+
+    /* ===== სიმბოლო ===== */
+    .mandala-wrap {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0 30px;
+    }
+
+    .mandala {
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 45%, #3a2a6e 0%, #1e1440 60%, #120c28 100%);
+      border: 2px solid rgba(212, 175, 55, 0.75);
+      box-shadow:
+        0 0 40px rgba(180, 100, 255, 0.45),
+        0 0 80px rgba(212, 175, 55, 0.2),
+        inset 0 0 30px rgba(212, 175, 55, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+
+    .mandala:hover {
+      transform: scale(1.03);
+      box-shadow:
+        0 0 55px rgba(180, 100, 255, 0.6),
+        0 0 100px rgba(212, 175, 55, 0.35);
+    }
+
+    .mandala svg {
+      width: 90%;
+      height: 90%;
+      filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.8));
+    }
+
+    /* ===== ნავიგაცია (მთავარი გვერდი) ===== */
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 30px;
+      padding: 12px;
+      background: rgba(35, 20, 65, 0.55);
+      border: 1px solid rgba(170, 130, 255, 0.25);
+      border-radius: 50px;
+      backdrop-filter: blur(8px);
+    }
+
+    .nav button {
+      background: linear-gradient(160deg, #3a2860, #2a1a48);
+      border: 1px solid rgba(190, 150, 255, 0.35);
+      color: #e6d8ff;
+      padding: 11px 15px;
+      border-radius: 28px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      min-width: 130px;
+    }
+
+    .nav button:hover {
+      background: linear-gradient(160deg, #5a3c90, #4a2c78);
+      border-color: var(--gold);
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(160, 90, 255, 0.35);
+    }
+
+    /* ===== განყოფილების აღწერა ===== */
+    .section-box {
+      background: rgba(30, 18, 55, 0.6);
+      border: 1px solid rgba(160, 120, 255, 0.25);
+      border-radius: 28px;
+      padding: 22px 24px;
+      margin-bottom: 28px;
+      text-align: center;
+      backdrop-filter: blur(6px);
+    }
+
+    .section-box h2 {
+      font-size: 1.5rem;
+      color: #e0d0ff;
+      margin-bottom: 12px;
+    }
+
+    .section-box p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: #c8b4f0;
+    }
+
+    /* ===== სტატიების ბადე ===== */
+    .articles-wrap {
+      background: rgba(25, 15, 50, 0.5);
+      border: 1px solid rgba(150, 110, 255, 0.2);
+      border-radius: 32px;
+      padding: 24px 18px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .card {
+      background: linear-gradient(165deg, #2c1c50, #1c1238);
+      border: 1px solid rgba(170, 130, 255, 0.3);
+      border-radius: 16px;
+      padding: 18px 12px;
+      text-align: center;
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      border-color: var(--gold);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 22px rgba(150, 80, 255, 0.3);
+    }
+
+    .card img {
+      width: 100%;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .card-title {
+      font-size: 0.95rem;
+      color: #d8c8ff;
+    }
+
+    /* ===== პაგინაცია ===== */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .page-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      background: rgba(45, 28, 75, 0.75);
+      border: 1px solid rgba(170, 130, 255, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .page-btn:hover, .page-btn.active {
+      background: linear-gradient(145deg, #6a40a0, #4a2a80);
+      border-color: var(--gold);
+      color: #fff;
+    }
+
+    /* ===== დღის ორაკული ===== */
+    .daily-oracle {
+      background: linear-gradient(160deg, #3a2468, #1e1440);
+      border: 2px solid var(--gold);
+      border-radius: 24px;
+      padding: 28px;
+      margin-bottom: 30px;
+      text-align: center;
+      box-shadow: 0 0 40px rgba(212, 175, 55, 0.25);
+      animation: fadeIn 0.6s ease;
+    }
+
+    .daily-oracle h3 {
+      color: var(--gold-light);
+      margin-bottom: 16px;
+      font-size: 1.3rem;
+    }
+
+    .daily-oracle img {
+      max-width: 220px;
+      border-radius: 16px;
+      margin-bottom: 14px;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+    }
+
+    .daily-oracle p {
+      color: #e0d4ff;
+      line-height: 1.6;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== საკონტაქტო ===== */
+    .contact-box {
+      background: rgba(30, 18, 55, 0.6);
+      border: 1px solid rgba(160, 120, 255, 0.25);
+      border-radius: 24px;
+      padding: 30px;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .contact-box a {
+      color: var(--gold-light);
+      font-size: 1.1rem;
+      text-decoration: none;
+    }
+
+    .contact-box a:hover { text-decoration: underline; }
+
+    /* ===== ადმინ ღილაკი ===== */
+    .admin-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 100;
+      background: rgba(60, 30, 100, 0.8);
+      border: 1px solid var(--gold);
+      color: #e0d0ff;
+      padding: 10px 16px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.85rem;
+      backdrop-filter: blur(6px);
+    }
+
+    .admin-btn:hover { background: rgba(90, 50, 140, 0.9); }
+
+    /* ===== ადმინ მოდალი ===== */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.open { display: flex; }
+
+    .modal-content {
+      background: #1a1035;
+      border: 1px solid rgba(180, 130, 255, 0.4);
+      border-radius: 20px;
+      padding: 28px;
+      max-width: 480px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-content h3 {
+      margin-bottom: 18px;
+      color: var(--gold-light);
+    }
+
+    .modal-content label {
+      display: block;
+      margin: 12px 0 4px;
+      font-size: 0.9rem;
+      color: #c8b4f0;
+    }
+
+    .modal-content input,
+    .modal-content textarea,
+    .modal-content select {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(160, 120, 255, 0.3);
+      background: #120c28;
+      color: #e8d9ff;
+      font-family: inherit;
+      font-size: 0.95rem;
+    }
+
+    .modal-content textarea { min-height: 90px; resize: vertical; }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .modal-actions button {
+      flex: 1;
+      padding: 11px;
+      border-radius: 12px;
+      border: none;
+      font-family: inherit;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .btn-save {
+      background: linear-gradient(145deg, #6a40a0, #4a2a80);
+      color: white;
+    }
+
+    .btn-cancel {
+      background: #2a1a40;
+      color: #c8b4f0;
+      border: 1px solid rgba(160,120,255,0.3);
+    }
+
+    /* ===== რესპონსივი ===== */
+    @media (max-width: 800px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .mandala { width: 200px; height: 200px; }
+      .nav button { min-width: 110px; font-size: 0.85rem; }
+    }
+
+    @media (max-width: 480px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <div id="cosmos"></div>
+
+  <!-- კუთხის ვარსკვლავები -->
+  <svg class="corner tl" viewBox="0 0 100 100"><path d="M50 8 L56 42 L90 42 L62 62 L72 95 L50 75 L28 95 L38 62 L10 42 L44 42 Z" fill="none" stroke="#c9a0ff" stroke-width="2"/></svg>
+  <svg class="corner tr" viewBox="0 0 100 100"><path d="M50 8 L56 42 L90 42 L62 62 L72 95 L50 75 L28 95 L38 62 L10 42 L44 42 Z" fill="none" stroke="#c9a0ff" stroke-width="2"/></svg>
+  <svg class="corner bl" viewBox="0 0 100 100"><path d="M50 8 L56 42 L90 42 L62 62 L72 95 L50 75 L28 95 L38 62 L10 42 L44 42 Z" fill="none" stroke="#c9a0ff" stroke-width="2"/></svg>
+  <svg class="corner br" viewBox="0 0 100 100"><path d="M50 8 L56 42 L90 42 L62 62 L72 95 L50 75 L28 95 L38 62 L10 42 L44 42 Z" fill="none" stroke="#c9a0ff" stroke-width="2"/></svg>
+
+  <div class="page">
+    <!-- ===== ჰედერი (ყოველთვის) ===== -->
+    <header>
+      <h1>მისტიკური სამყაროს ენერგიები</h1>
+      <p class="site-intro">
+        ეს არის სამყაროს მისტიკური მაგიური ფილოსოფიური შენგვნებით სავსე მოგზაურობა ჩემს მიერ. 
+        არის შეუძნელი ყველაფერი რიტუალი, ნაწარმოები, ყველა ორაკული ჩემს მიერ არის მოდიფიცირებული. 
+        მე არ ვარ პროფესიონალი, უბრალოდ მაგრამ გარშემო ყოფნისას ჩემს შეგრძნებებს რიტუალებში სრულდად უსასრულოდ ვისაცაც არ გავუზიარებ.
+      </p>
+    </header>
+
+    <!-- სიმბოლო -->
+    <div class="mandala-wrap">
+      <div class="mandala" id="mainSymbol" title="მთავარ გვერდზე დაბრუნება">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <!-- გარე წრე -->
+          <circle cx="100" cy="100" r="97" fill="none" stroke="#d4af37" stroke-width="2"/>
+          <!-- შიდა წრე -->
+          <circle cx="100" cy="100" r="72" fill="none" stroke="#d4af37" stroke-width="1.6"/>
+          
+          <!-- დავითის ვარსკვლავი -->
+          <polygon points="100,28 135,85 175,85 145,115 160,165 100,140 40,165 55,115 25,85 65,85" 
+                   fill="none" stroke="#d4af37" stroke-width="1.8"/>
+          <polygon points="100,172 65,115 25,115 55,85 40,35 100,60 160,35 145,85 175,115 135,115" 
+                   fill="none" stroke="#d4af37" stroke-width="1.8"/>
+
+          <!-- ცენტრალური ყვავილი -->
+          <circle cx="100" cy="100" r="22" fill="none" stroke="#d4af37" stroke-width="1.3"/>
+          <circle cx="100" cy="85" r="14" fill="none" stroke="#d4af37" stroke-width="1"/>
+          <circle cx="100" cy="115" r="14" fill="none" stroke="#d4af37" stroke-width="1"/>
+          <circle cx="85" cy="100" r="14" fill="none" stroke="#d4af37" stroke-width="1"/>
+          <circle cx="115" cy="100" r="14" fill="none" stroke="#d4af37" stroke-width="1"/>
+
+          <!-- პატარა ვარსკვლავები / წრეები გარშემო -->
+          <circle cx="100" cy="18" r="11" fill="none" stroke="#d4af37" stroke-width="1.2"/>
+          <circle cx="100" cy="182" r="11" fill="none" stroke="#d4af37" stroke-width="1.2"/>
+          <circle cx="18" cy="100" r="11" fill="none" stroke="#d4af37" stroke-width="1.2"/>
+          <circle cx="182" cy="100" r="11" fill="none" stroke="#d4af37" stroke-width="1.2"/>
+          
+          <circle cx="40" cy="40" r="10" fill="none" stroke="#d4af37" stroke-width="1.1"/>
+          <circle cx="160" cy="40" r="10" fill="none" stroke="#d4af37" stroke-width="1.1"/>
+          <circle cx="40" cy="160" r="10" fill="none" stroke="#d4af37" stroke-width="1.1"/>
+          <circle cx="160" cy="160" r="10" fill="none" stroke="#d4af37" stroke-width="1.1"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- ===== მთავარი გვერდის კონტენტი ===== -->
+    <div id="view-main">
+      <div class="nav" id="mainNav">
+        <button data-section="logic">ქალური ლოგიკა</button>
+        <button data-section="energy">მაგიური ენერგიები</button>
+        <button data-section="ritual">რიტუალები</button>
+        <button data-section="oracle">ორაკული</button>
+        <button data-section="universe">სამყარო</button>
+        <button data-section="thoughts">ჩემი ფიქრები</button>
+      </div>
+
+      <div class="articles-wrap">
+        <div class="grid" id="mainGrid"></div>
+      </div>
+      <div class="pagination" id="mainPagination"></div>
+    </div>
+
+    <!-- ===== განყოფილების კონტენტი ===== -->
+    <div id="view-section" class="hidden">
+      <div class="section-box">
+        <h2 id="sectionTitle"></h2>
+        <p id="sectionDesc"></p>
+      </div>
+
+      <!-- დღის ორაკული (მხოლოდ ორაკულების გვერდზე) -->
+      <div id="dailyOracleBox" class="daily-oracle hidden"></div>
+
+      <div class="articles-wrap">
+        <div class="grid" id="sectionGrid"></div>
+      </div>
+      <div class="pagination" id="sectionPagination"></div>
+    </div>
+
+    <!-- ===== საკონტაქტო ===== -->
+    <div id="view-contact" class="hidden">
+      <div class="contact-box">
+        <h2 style="margin-bottom:16px; color:#e0d0ff;">საკონტაქტო</h2>
+        <p style="margin-bottom:12px; color:#c8b4f0;">ჩემი ინფორმაცია და Facebook:</p>
+        <a href="https://facebook.com/შენი-პროფილი" target="_blank" id="fbLink">
+          Facebook პროფილი
+        </a>
+        <p style="margin-top:18px; font-size:0.9rem; color:#a090c0;">
+          (აქ შეგიძლია შეცვალო შენი რეალური Facebook ბმული)
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ადმინ ღილაკი -->
+  <button class="admin-btn" id="adminBtn">+ დამატება</button>
+
+  <!-- ადმინ მოდალი -->
+  <div class="modal" id="adminModal">
+    <div class="modal-content">
+      <h3>ახალი ჩანაწერის დამატება</h3>
+      
+      <label>ტიპი</label>
+      <select id="addType">
+        <option value="article">სტატია</option>
+        <option value="oracle">ორაკული (ნახატი)</option>
+      </select>
+
+      <label>განყოფილება (სტატიისთვის)</label>
+      <select id="addSection">
+        <option value="logic">ქალური ლოგიკა</option>
+        <option value="energy">მაგიური ენერგიები</option>
+        <option value="ritual">რიტუალები</option>
+        <option value="oracle">ორაკული</option>
+        <option value="universe">სამყარო</option>
+        <option value="thoughts">ჩემი ფიქრები</option>
+      </select>
+
+      <label>სათაური</label>
+      <input type="text" id="addTitle" placeholder="სათაური...">
+
+      <label>აღწერა / ტექსტი</label>
+      <textarea id="addText" placeholder="ტექსტი ან აღწერა..."></textarea>
+
+      <label>ფოტოს ბმული (URL)</label>
+      <input type="text" id="addImage" placeholder="https://...">
+
+      <div class="modal-actions">
+        <button class="btn-cancel" id="cancelAdd">გაუქმება</button>
+        <button class="btn-save" id="saveAdd">შენახვა</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== კოსმოსური ვარსკვლავები =====
+    const cosmos = document.getElementById('cosmos');
+    for (let i = 0; i < 120; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      const size = Math.random() * 2.2 + 0.6;
+      star.style.width = size + 'px';
+      star.style.height = size + 'px';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.setProperty('--dur', (Math.random() * 4 + 2) + 's');
+      cosmos.appendChild(star);
+    }
+
+    // ===== მონაცემები =====
+    const SECTIONS = {
+      logic: {
+        title: 'ქალური ლოგიკა',
+        desc: 'ამ განყოფილებაში შევეხები ყველაფერს: პოლიტიკას, სოციალურ თემებს, ურთიერთობებს, პროპაგანდას, ხალხის დამორჩილებას, რწმენას, რელიგიებს, ფილოსოფიას… ზოგადად ყველაფერს. მთლიანად ჩემი აზრები, შეხედულებები და ფიქრები იქნება.'
+      },
+      energy: {
+        title: 'მაგიური ენერგიები',
+        desc: 'ამ განყოფილებაში შევეხები ენერგიებს, ვიბრაციასა და სიხშირეს. შევეცდები სამოყვარულო დონეზე ავხსნა სხვადასხვა ენერგიები, რა სიხშირეზე ვიბრირებენ. მე მიმაჩნია, რომ სინათლეც შეიძლება იყოს უარყოფითი და სიბნელეც — დადებითი. ეს მაგიაა და ეს ჩემი პირადი მოსაზრებებია. მე არ ვარ ფიზიკოსი და არც ეზოთერიკი — ვწერ იმას, რაც მესმის და რასაც შევიგრძნობ.'
+      },
+      ritual: {
+        title: 'რიტუალები',
+        desc: 'ამ განყოფილებაში იქნება სრულად ჩემს მიერ შექმნილი რიტუალები და შელოცვები. ისინი მათთვის შევქმენი, ვისაც სჯერა, რომ სამყარო მხოლოდ ის არ არის, რასაც მატერიალურად ვხედავთ. მინდა, რომ ცოტათი მაინც დაგეხმაროთ სამყაროსთან დაახლოებაში. ისინი მაქსიმალურად უსაფრთხოა, არ ეხმიანება სიბოროტეს და მხოლოდ ჰარმონიასა და სულიერ განვითარებას უწყობს ხელს.'
+      },
+      oracle: {
+        title: 'ორაკული',
+        desc: 'ამ განყოფილებაში წარმოგიდგენთ ჩემს მიერ შექმნილ ორაკულებს. ისინი მთლიანად ჩემია, ჩემი გრძნობებია. ვეცადე მათი მისტიური და ფილოსოფიური მნიშვნელობა გადმომეცა და გამეზიარებინა თქვენთვის.'
+      },
+      universe: {
+        title: 'სამყარო',
+        desc: 'ამ განყოფილებაში ვეცდები სამყაროზე ვისაუბრო და მოყვარულის დონეზე მეცნიერულად ავხსნა სამყაროს შექმნა და სხვა თეორიები. შეგახსენებთ — მე არ ვარ პროფესიონალი ფიზიკოსი ან ასტრონომი. ეს ყველაფერი მხოლოდ ჩემი იდეები და თეორიებია.'
+      },
+      thoughts: {
+        title: 'ჩემი ფიქრები',
+        desc: 'ამ განყოფილებაში ჩემს მიერ დაწერილ მხატვრულ ნაწარმოებებს და ჩემს შექმნილ ისტორიებს გაგაცნობთ.'
+      }
+    };
+
+    // localStorage-დან წამოღება
+    let articles = JSON.parse(localStorage.getItem('mystic_articles') || '[]');
+    let oracles  = JSON.parse(localStorage.getItem('mystic_oracles')  || '[]');
+
+    // ===== რენდერი =====
+    function renderCards(container, items) {
+      container.innerHTML = '';
+      if (!items.length) {
+        for (let i = 0; i < 8; i++) {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `<div class="card-title">სტატიების სახელები</div>`;
+          container.appendChild(card);
+        }
+        return;
+      }
+      items.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          ${item.image ? `<img src="${item.image}" alt="">` : ''}
+          <div class="card-title">${item.title || 'უსათაურო'}</div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function showMain() {
+      document.getElementById('view-main').classList.remove('hidden');
+      document.getElementById('view-section').classList.add('hidden');
+      document.getElementById('view-contact').classList.add('hidden');
+      renderCards(document.getElementById('mainGrid'), articles.slice(0, 8));
+    }
+
+    function showSection(key) {
+      document.getElementById('view-main').classList.add('hidden');
+      document.getElementById('view-contact').classList.add('hidden');
+      document.getElementById('view-section').classList.remove('hidden');
+
+      const sec = SECTIONS[key];
+      document.getElementById('sectionTitle').textContent = sec.title;
+      document.getElementById('sectionDesc').textContent = sec.desc;
+
+      const dailyBox = document.getElementById('dailyOracleBox');
+      if (key === 'oracle') {
+        dailyBox.classList.remove('hidden');
+        showDailyOracle();
+        renderCards(document.getElementById('sectionGrid'), oracles);
+      } else {
+        dailyBox.classList.add('hidden');
+        const filtered = articles.filter(a => a.section === key);
+        renderCards(document.getElementById('sectionGrid'), filtered.length ? filtered : []);
+      }
+    }
+
+    function showDailyOracle() {
+      const box = document.getElementById('dailyOracleBox');
+      if (!oracles.length) {
+        box.innerHTML = `<h3>დღის ორაკული</h3><p>ჯერ არცერთი ორაკული არ არის დამატებული.</p>`;
+        return;
+      }
+      // თარიღის მიხედვით სტაბილური არჩევანი
+      const dayIndex = new Date().getDate() % oracles.length;
+      const o = oracles[dayIndex];
+      box.innerHTML = `
+        <h3>✦ დღის ორაკული ✦</h3>
+        ${o.image ? `<img src="${o.image}" alt="დღის ორაკული">` : ''}
+        <p><strong>${o.title || ''}</strong></p>
+        <p>${o.text || ''}</p>
+      `;
+    }
+
+    // ===== მოვლენები =====
+    document.getElementById('mainSymbol').addEventListener('click', showMain);
+
+    document.querySelectorAll('#mainNav button').forEach(btn => {
+      btn.addEventListener('click', () => showSection(btn.dataset.section));
+    });
+
+    // ადმინ
+    const modal = document.getElementById('adminModal');
+    document.getElementById('adminBtn').addEventListener('click', () => modal.classList.add('open'));
+    document.getElementById('cancelAdd').addEventListener('click', () => modal.classList.remove('open'));
+
+    document.getElementById('saveAdd').addEventListener('click', () => {
+      const type    = document.getElementById('addType').value;
+      const section = document.getElementById('addSection').value;
+      const title   = document.getElementById('addTitle').value.trim();
+      const text    = document.getElementById('addText').value.trim();
+      const image   = document.getElementById('addImage').value.trim();
+
+      if (!title && !text) return alert('სათაური ან ტექსტი მაინც შეიყვანე');
+
+      if (type === 'oracle') {
+        oracles.push({ title, text, image });
+        localStorage.setItem('mystic_oracles', JSON.stringify(oracles));
+      } else {
+        articles.push({ title, text, image, section });
+        localStorage.setItem('mystic_articles', JSON.stringify(articles));
+      }
+
+      modal.classList.remove('open');
+      document.getElementById('addTitle').value = '';
+      document.getElementById('addText').value = '';
+      document.getElementById('addImage').value = '';
+      alert('წარმატებით დაემატა!');
+      // განახლება
+      if (document.getElementById('view-section').classList.contains('hidden') === false) {
+        // თუ განყოფილებაში ვართ — გადავტვირთოთ
+        const current = document.getElementById('sectionTitle').textContent;
+        for (let k in SECTIONS) {
+          if (SECTIONS[k].title === current) showSection(k);
+        }
+      } else {
+        showMain();
+      }
+    });
+
+    // დაწყება
+    showMain();
+  </script>
+</body>
+</html>
